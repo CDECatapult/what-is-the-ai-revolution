@@ -184,9 +184,9 @@ plt.show()
 
 
 # As a side note observe that the terms such as `artificial_intelligence` or `ai` are not commonly used in titles.
-# 139 out of 41000 titles contain one of these terms (fewer than 0.5%)
+# 138 out of 41000 titles contain one of these terms (fewer than 0.5%)
 
-# In[10]:
+# In[15]:
 
 
 len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
