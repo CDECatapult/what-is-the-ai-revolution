@@ -9,6 +9,11 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 from collections import Counter
+import itertools
+
+def flatten(listOfLists):
+    "Flatten one level of nesting"
+    return itertools.chain.from_iterable(listOfLists)
 
 get_ipython().magic('matplotlib inline')
 
@@ -19,61 +24,64 @@ get_ipython().magic('matplotlib inline')
 # 
 # We often hear that there's been an explosion in AI research, that AI is advancing a breakneck speed.
 # However, when we look at computer science publications we see no evidence of such changes in the AI research landscape.
-# Infact many traditional fields such as logic programming, evolutionary algorithms, bayesian statistics are on the decline.
+# Infact many traditional fields such as logic programming, evolutionary algorithms, bayesian statistics appear to be on the decline.
 # What we do see is a unprecidented explosion of publications in the field of deep learning.
 # Since 2012 deep learning has gone from an unused term to a phrase that dominates the landscape.
 # We estimate that more than one fith of AI or similar publications are now part of a deep learning gold rush.
+# It is this explosion in deep learning that is fueling the latest media round of interest in AI.
 # 
 # ## Dataset
 # 
-# The study uses the Kaggle Arxiv dataset. 
-# A collection of metadata about 41000 publications since 1995 tagged with:
-# * Machine Learning
-# * Computation and Language
-# * Artificial Inteligence
-# * Computer Vision
-# * Neural and Evolutionary Computing
+# We take the titles of arXiv computer science publications tagged with any of the following catagories:
 # 
-# IMPORTANT NOTE: We need to reproduce this data ourselves in order to completely trust it. Volunteers are welcome.
-# 
-# You can download the dataset [here](https://www.kaggle.com/neelshah18/arxivdataset/activity).
+# * AI - Artificial Intelligence
+#     * Covers all areas of AI except Vision, Robotics, Machine Learning, Multiagent Systems, and Computation and Language (Natural Language Processing), which have separate subject areas. In particular, includes Expert Systems, Theorem Proving (although this may overlap with Logic in Computer Science), Knowledge Representation, Planning, and Uncertainty in AI. 
+# * CL - Computation and Language (Computational Linguistics and Natural Language and Speech Processing)
+#     * Covers natural language processing. 
+# * CV - Computer Vision and Pattern Recognition
+#     * Covers image processing, computer vision, pattern recognition, and scene understanding.
+# * LG - Machine Learning
+#     * Covers machine learning and computational (PAC) learning. 
+# * NE - Neural and Evolutionary Computation
+#     * Covers neural networks, connectionism, genetic algorithms, artificial life, adaptive behavior. 
 
-# In[95]:
+# In[36]:
 
 
-data = pd.read_json('./data.jsonlines', lines=True)
-data = data[data.catagories.apply(lambda records: "cs.AI" in records)]
-data['year'] = data['created'].str.split('-').apply(lambda x: int(x[0]))
+## uncomment and run the cell to download all of the data direct from arxiv (~1 hour)
+
+# ! python scrape.py > data.jsonlines
+# tags = ["cs.AI", "cs.CL", "cs.CV", "cs.LG", "cs.NE"]
+# data = pd.read_json('./data.jsonlines', lines=True)
+# data = data[data.catagories.apply(lambda records: any((item in records for item in tags)))]
+# data['year'] = data['created'].str.split('-').apply(lambda x: int(x[0]))
+# data = data[np.logical_and(data['year'] > 1996, data['year'] < 2018)]
+# data.to_json('filtered.jsonlines', lines=True, orient='records')
+
+
+# In[37]:
+
+
+# otherwise load the prefilted data from the repo
+data = pd.read_json('./filtered.jsonlines', lines=True)[['title', 'year', 'catagories']]
 data.head()
-
-
-# In[96]:
-
-
-# examine the most popular tags
-tag_counts = Counter(row['term'] for tag in tags for row in tag if row['term'][:2] == 'cs')
-sorted(tag_counts.items(), key = lambda x: x[1], reverse=True)[:5]
 
 
 # ## Preprocessing
 # 
-# Create some columns in the dataset to mark the presence of some key words.
+# Below we create columns in the dataset to mark the presence of some key words.
 
-# In[97]:
+# In[38]:
 
 
 data['is_deep'] = data['title'].str.contains('deep', case=False)
 data['is_adversarial'] = data['title'].str.contains('adversarial', case=False)
 data['is_reinforcement'] = data['title'].str.contains('reinforcement', case=False)
 data['is_convolutional'] = data['title'].str.contains('convolutional', case=False)
-# data['is_bayesian'] = data['title'].str.contains('bayesian', case=False)
 data['is_ai'] = data['title'].str.contains(' ai ', case=False)
 data['is_artificial_intelligence'] = data['title'].str.contains('artificial intelligence', case=False)
-# data['is_bandit_algorithm'] = data['title'].str.contains('bandit algorithm', case=False)
 data['is_logic'] = data['title'].str.contains('logic', case=False)
-# data['is_algorithm'] = data['title'].str.contains('algorithm', case=False)
 data['is_evolutionary'] = data['title'].str.contains('evolutionary', case=False)
-# data['is_fuzzy_logic'] = data['title'].str.contains('fuzzy logic', case=False)
 
 
 # ## Results
@@ -82,9 +90,9 @@ data['is_evolutionary'] = data['title'].str.contains('evolutionary', case=False)
 # 
 # Fuzzy logic and logical programming were staples of AI research through the late ninties and early 21st century.
 # Below we can see a steady rate of publications containing the word `logic` in the title. 
-# There has been a gradual decline since 2012.
+# There has been a gradual decline since 2002 as a share of the total number of publications.
 
-# In[98]:
+# In[39]:
 
 
 counts = {}
@@ -102,9 +110,9 @@ plt.bar(years, hist)
 plt.show()
 
 
-# Similarly evolutionary algorithms peaked in 2005 with a gradual rise and fall either side.
+# Similarly evolutionary algorithms peaked around 2004 with a gradual rise and fall either side.
 
-# In[99]:
+# In[27]:
 
 
 counts = {}
@@ -124,7 +132,7 @@ plt.show()
 
 # In stark contrast with the previous two examples titles containing the word deep have exploded.
 
-# In[100]:
+# In[28]:
 
 
 counts = {}
@@ -148,7 +156,7 @@ plt.show()
 
 # When we examine several words indicative of deep learning research such as `deep`, `adversarial` and `convolutional` we see what appears to be exponential growth from around 2012.
 
-# In[101]:
+# In[29]:
 
 
 counts = {}
@@ -172,7 +180,7 @@ plt.show()
 # As a side note observe that the terms such as `artificial_intelligence` or `ai` are not commonly used in titles.
 # 139 out of 41000 titles contain one of these terms (fewer than 0.5%)
 
-# In[102]:
+# In[30]:
 
 
 len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
@@ -182,7 +190,7 @@ len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
 # 
 # Next we examine which words have seen the biggest increase or decreate in usage pre and post 2012
 
-# In[103]:
+# In[31]:
 
 
 base_cv = CountVectorizer(analyzer='word', stop_words='english', ngram_range=[1, 2])
@@ -197,7 +205,7 @@ arr = cv.fit_transform(data[data['year'] > 2012]['title'])
 new_counts = np.array(np.sum(arr, axis=0)).flatten()  / arr.shape[0]
 
 
-# In[104]:
+# In[32]:
 
 
 diff = 100 * (new_counts - old_counts)
@@ -207,7 +215,7 @@ arg_diff = np.argsort(diff)
 
 # ### Pre - 2012
 
-# In[105]:
+# In[33]:
 
 
 pd.DataFrame(
@@ -218,7 +226,7 @@ pd.DataFrame(
 
 # ### Post - 2012
 
-# In[106]:
+# In[34]:
 
 
 pd.DataFrame(
