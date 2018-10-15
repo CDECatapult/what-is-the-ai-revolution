@@ -38,16 +38,16 @@ get_ipython().magic('matplotlib inline')
 # 
 # You can download the dataset [here](https://www.kaggle.com/neelshah18/arxivdataset/activity).
 
-# In[25]:
+# In[95]:
 
 
-# load in the dataset
-data = pd.read_json('./arxivData.json', lines=False)
-tags = list(map(eval, data['tag']))
+data = pd.read_json('./data.jsonlines', lines=True)
+data = data[data.catagories.apply(lambda records: "cs.AI" in records)]
+data['year'] = data['created'].str.split('-').apply(lambda x: int(x[0]))
 data.head()
 
 
-# In[24]:
+# In[96]:
 
 
 # examine the most popular tags
@@ -59,7 +59,7 @@ sorted(tag_counts.items(), key = lambda x: x[1], reverse=True)[:5]
 # 
 # Create some columns in the dataset to mark the presence of some key words.
 
-# In[43]:
+# In[97]:
 
 
 data['is_deep'] = data['title'].str.contains('deep', case=False)
@@ -84,7 +84,7 @@ data['is_evolutionary'] = data['title'].str.contains('evolutionary', case=False)
 # Below we can see a steady rate of publications containing the word `logic` in the title. 
 # There has been a gradual decline since 2012.
 
-# In[36]:
+# In[98]:
 
 
 counts = {}
@@ -98,13 +98,13 @@ for year in years:
 
 plt.xlabel('year')
 plt.title('Percentage of titles containing "logic" for each year')
-plt.bar(years[2:-1], hist[2:-1])
+plt.bar(years, hist)
 plt.show()
 
 
 # Similarly evolutionary algorithms peaked in 2005 with a gradual rise and fall either side.
 
-# In[37]:
+# In[99]:
 
 
 counts = {}
@@ -118,13 +118,13 @@ for year in years:
 
 plt.xlabel('year')
 plt.title('Percentage of titles containing "evolutionary" for each year')
-plt.bar(years[:-1], hist[:-1])
+plt.bar(years, hist)
 plt.show()
 
 
 # In stark contrast with the previous two examples titles containing the word deep have exploded.
 
-# In[35]:
+# In[100]:
 
 
 counts = {}
@@ -142,13 +142,13 @@ for year in years:
 plt.xlabel('year')
 plt.title('Percentage of titles containing the "deep" for each year')
 
-plt.bar(years[:-1], hist[:-1])
+plt.bar(years, hist)
 plt.show()
 
 
 # When we examine several words indicative of deep learning research such as `deep`, `adversarial` and `convolutional` we see what appears to be exponential growth from around 2012.
 
-# In[41]:
+# In[101]:
 
 
 counts = {}
@@ -163,7 +163,7 @@ years = sorted(counts.keys())
 for year in years:
     hist.append(100 * counts[year]['freq'] / counts[year]['total'])
     
-plt.bar(years[:-1], hist[:-1])
+plt.bar(years, hist)
 plt.xlabel('year')
 plt.title('Percentage of titles containing the "deep",\n"adversarial" or "convolutional"  for each year')
 plt.show()
@@ -172,7 +172,7 @@ plt.show()
 # As a side note observe that the terms such as `artificial_intelligence` or `ai` are not commonly used in titles.
 # 139 out of 41000 titles contain one of these terms (fewer than 0.5%)
 
-# In[46]:
+# In[102]:
 
 
 len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
@@ -182,7 +182,7 @@ len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
 # 
 # Next we examine which words have seen the biggest increase or decreate in usage pre and post 2012
 
-# In[47]:
+# In[103]:
 
 
 base_cv = CountVectorizer(analyzer='word', stop_words='english', ngram_range=[1, 2])
@@ -197,7 +197,7 @@ arr = cv.fit_transform(data[data['year'] > 2012]['title'])
 new_counts = np.array(np.sum(arr, axis=0)).flatten()  / arr.shape[0]
 
 
-# In[48]:
+# In[104]:
 
 
 diff = 100 * (new_counts - old_counts)
@@ -207,7 +207,7 @@ arg_diff = np.argsort(diff)
 
 # ### Pre - 2012
 
-# In[50]:
+# In[105]:
 
 
 pd.DataFrame(
@@ -218,7 +218,7 @@ pd.DataFrame(
 
 # ### Post - 2012
 
-# In[51]:
+# In[106]:
 
 
 pd.DataFrame(
