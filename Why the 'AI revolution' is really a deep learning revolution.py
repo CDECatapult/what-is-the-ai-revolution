@@ -45,7 +45,7 @@ get_ipython().magic('matplotlib inline')
 # * NE - Neural and Evolutionary Computation
 #     * Covers neural networks, connectionism, genetic algorithms, artificial life, adaptive behavior. 
 
-# In[36]:
+# In[2]:
 
 
 ## uncomment and run the cell to download all of the data direct from arxiv (~1 hour)
@@ -59,7 +59,7 @@ get_ipython().magic('matplotlib inline')
 # data.to_json('filtered.jsonlines', lines=True, orient='records')
 
 
-# In[37]:
+# In[3]:
 
 
 # otherwise load the prefilted data from the repo
@@ -67,11 +67,17 @@ data = pd.read_json('./filtered.jsonlines', lines=True)[['title', 'year', 'catag
 data.head()
 
 
+# In[4]:
+
+
+len(data)
+
+
 # ## Preprocessing
 # 
 # Below we create columns in the dataset to mark the presence of some key words.
 
-# In[38]:
+# In[5]:
 
 
 data['is_deep'] = data['title'].str.contains('deep', case=False)
@@ -92,7 +98,7 @@ data['is_evolutionary'] = data['title'].str.contains('evolutionary', case=False)
 # Below we can see a steady rate of publications containing the word `logic` in the title. 
 # There has been a gradual decline since 2002 as a share of the total number of publications.
 
-# In[39]:
+# In[6]:
 
 
 counts = {}
@@ -112,7 +118,7 @@ plt.show()
 
 # Similarly evolutionary algorithms peaked around 2004 with a gradual rise and fall either side.
 
-# In[27]:
+# In[7]:
 
 
 counts = {}
@@ -132,7 +138,7 @@ plt.show()
 
 # In stark contrast with the previous two examples titles containing the word deep have exploded.
 
-# In[28]:
+# In[8]:
 
 
 counts = {}
@@ -156,7 +162,7 @@ plt.show()
 
 # When we examine several words indicative of deep learning research such as `deep`, `adversarial` and `convolutional` we see what appears to be exponential growth from around 2012.
 
-# In[29]:
+# In[9]:
 
 
 counts = {}
@@ -180,7 +186,7 @@ plt.show()
 # As a side note observe that the terms such as `artificial_intelligence` or `ai` are not commonly used in titles.
 # 139 out of 41000 titles contain one of these terms (fewer than 0.5%)
 
-# In[30]:
+# In[10]:
 
 
 len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
@@ -190,7 +196,7 @@ len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
 # 
 # Next we examine which words have seen the biggest increase or decreate in usage pre and post 2012
 
-# In[31]:
+# In[11]:
 
 
 base_cv = CountVectorizer(analyzer='word', stop_words='english', ngram_range=[1, 2])
@@ -205,7 +211,7 @@ arr = cv.fit_transform(data[data['year'] > 2012]['title'])
 new_counts = np.array(np.sum(arr, axis=0)).flatten()  / arr.shape[0]
 
 
-# In[32]:
+# In[12]:
 
 
 diff = 100 * (new_counts - old_counts)
@@ -215,7 +221,7 @@ arg_diff = np.argsort(diff)
 
 # ### Pre - 2012
 
-# In[33]:
+# In[13]:
 
 
 pd.DataFrame(
@@ -226,7 +232,7 @@ pd.DataFrame(
 
 # ### Post - 2012
 
-# In[34]:
+# In[14]:
 
 
 pd.DataFrame(
