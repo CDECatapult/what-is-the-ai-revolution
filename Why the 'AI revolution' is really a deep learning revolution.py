@@ -32,6 +32,8 @@ get_ipython().magic('matplotlib inline')
 # 
 # ## Dataset
 # 
+# arXiv is a free and open reposity for preprints of accademic papers that have been approved for publication after moderation. 
+# 
 # We take the titles of arXiv computer science publications tagged with any of the following catagories:
 # 
 # * AI - Artificial Intelligence
@@ -293,7 +295,11 @@ plt.show()
 # Deep learning has come from obscurity to ubiquity, the subject of approximately one in five publications whilst still growings in its share.
 # Following the incredibly rapid trends demonstated above deep learning is on course to saturate AI research in the next few years, although this is far from a certainty.
 # 
+# The data from the guardian strongly suggests that the increase in press overage of AI is being by breakthroughs in deep learning.
+# 
 # When reading about AI revolutions in the press we need to remember in reality it is a deep learning revolution.
-# Deep learning is not a silver bullet, while it will continue to make huge strides in some areas (very high dimensional proplems with huge datasets) it is unliekly to have any impact in others. 
+# Deep learning is not a silver bullet, while it will continue to make huge strides in some areas (very high dimensional proplems with huge datasets) it is unliekly to have any impact in others.
+# 
+# Deep leaning is applied to large datasets for high dimesnional problems such as image recognition, text to speach and translation. This is reflected in advances in products like Google Translate, Siri, Alexa and 
 # 
 # If we do not unsterstand the strengths and weeknesses of deep learning and communicate them to manage expectations we risk a damaging gap between expectation and reality, between researchers and technologists which could be harmful for future progress. 
