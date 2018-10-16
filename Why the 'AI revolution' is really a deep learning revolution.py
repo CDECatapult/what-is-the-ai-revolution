@@ -262,7 +262,7 @@ pd.DataFrame(
 # Let's compare the trends from arxiv to how the word AI is trending in guardian news articles. 
 # The trend is remarkably similar to the deep learning trend in accademic publications.
 
-# In[21]:
+# In[22]:
 
 
 guardian_data = pd.DataFrame([  
@@ -276,7 +276,7 @@ guardian_data = pd.DataFrame([
    {'ai':60, 'year': 2017, 'total': 7272},
 ])
 
-plt.bar(guardian_data['year'], guardian_data['ai'] / guardian_data['total'])
+plt.bar(guardian_data['year'], 100 * guardian_data['ai'] / guardian_data['total'])
 plt.xlabel('year')
 plt.title('Percentage of guardian technology \n headlines containing AI')
 plt.show()
