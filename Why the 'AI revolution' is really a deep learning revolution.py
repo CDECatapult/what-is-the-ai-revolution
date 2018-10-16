@@ -257,6 +257,31 @@ pd.DataFrame(
 # 
 # have increased dramatically. In some cases they appear over 100 times more often than after 2012 compared to before 2012.
 
+# ## Examining popular media
+# 
+# Let's compare the trends from arxiv to how the word AI is trending in guardian news articles. 
+# The trend is remarkably similar to the deep learning trend in accademic publications.
+
+# In[21]:
+
+
+guardian_data = pd.DataFrame([  
+   {'ai': 1, 'year': 2010, 'total': 7201},
+   {'ai':2, 'year': 2011, 'total': 8117},
+   {'ai':1, 'year': 2012, 'total': 8376},
+   {'ai':3, 'year': 2013, 'total': 9874},
+   {'ai':7, 'year': 2014, 'total': 10569},
+   {'ai':16, 'year': 2015, 'total': 9535},
+   {'ai':51, 'year': 2016, 'total': 9366},
+   {'ai':60, 'year': 2017, 'total': 7272},
+])
+
+plt.bar(guardian_data['year'], guardian_data['ai'] / guardian_data['total'])
+plt.xlabel('year')
+plt.title('Percentage of guardian technology \n headlines containing AI')
+plt.show()
+
+
 # # Conclusions
 # 
 # The computer science AI landscape has transformed since 2012.
