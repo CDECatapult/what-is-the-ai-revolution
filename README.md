@@ -5,13 +5,13 @@ To run the notebook and script:
 Create a new anaconda environment:
 
 ```python
-conda create -n revolution anaconda
+conda create -n env anaconda
 ```
 
 activate it
 
 ```bash
-source activate revolution
+source activate env
 ```
 
 Download arXiv data into data.jsonlines (takes about 1 hour)
