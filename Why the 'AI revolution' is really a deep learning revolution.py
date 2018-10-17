@@ -188,7 +188,7 @@ plt.show()
 # As a side note observe that the terms such as `artificial_intelligence` or `ai` are not commonly used in titles.
 # 138 out of 41000 titles contain one of these terms (fewer than 0.5%)
 
-# In[15]:
+# In[10]:
 
 
 len(data[data['is_artificial_intelligence'] | data['is_ai']]), len(data)
@@ -223,7 +223,7 @@ arg_diff = np.argsort(diff)
 
 # ### Pre - 2012
 
-# In[13]:
+# In[17]:
 
 
 pd.DataFrame(
@@ -264,7 +264,20 @@ pd.DataFrame(
 # Let's compare the trends from arxiv to how the word AI is trending in guardian news articles. 
 # The trend is remarkably similar to the deep learning trend in accademic publications.
 
-# In[22]:
+# In[15]:
+
+
+## Uncomment this cell to download the guardian data from scratch, you will need an API key
+# ! python guardian.py > guardian.jsonlines
+# guardian_data = []
+# guardian_data_df = pd.read_json('guardian.jsonlines', lines=True, orient='records')
+# guardian_data_df = guardian_data_df[guardian_data_df['year'] < 2018]
+# guardian_data_df['year'] = guardian_data_df['webPublicationDate'].str.split('-').apply(lambda x: int(x[0]))
+# for year, group in guardian_data_df.groupby('year'):
+#     guardian_data.append({'year': year, 'ai': sum(group['webTitle'].str.contains('AI') > 0), 'total': len(group)})
+
+
+# In[16]:
 
 
 guardian_data = pd.DataFrame([  

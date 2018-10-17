@@ -12768,7 +12768,7 @@ SsaB38ysZP4/Yw11DqkxJVUAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;is_artificial_intelligence&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;is_ai&#39;</span><span class="p">]]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -12784,7 +12784,7 @@ SsaB38ysZP4/Yw11DqkxJVUAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[15]:</div>
+<div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -12855,7 +12855,7 @@ SsaB38ysZP4/Yw11DqkxJVUAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -12874,7 +12874,7 @@ SsaB38ysZP4/Yw11DqkxJVUAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[13]:</div>
+<div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -13173,7 +13173,27 @@ The trend is remarkably similar to the deep learning trend in accademic publicat
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Uncomment this cell to download the guardian data from scratch, you will need an API key</span>
+<span class="c1"># ! python guardian.py &gt; guardian.jsonlines</span>
+<span class="c1"># guardian_data = []</span>
+<span class="c1"># guardian_data_df = pd.read_json(&#39;guardian.jsonlines&#39;, lines=True, orient=&#39;records&#39;)</span>
+<span class="c1"># guardian_data_df = guardian_data_df[guardian_data_df[&#39;year&#39;] &lt; 2018]</span>
+<span class="c1"># guardian_data_df[&#39;year&#39;] = guardian_data_df[&#39;webPublicationDate&#39;].str.split(&#39;-&#39;).apply(lambda x: int(x[0]))</span>
+<span class="c1"># for year, group in guardian_data_df.groupby(&#39;year&#39;):</span>
+<span class="c1">#     guardian_data.append({&#39;year&#39;: year, &#39;ai&#39;: sum(group[&#39;webTitle&#39;].str.contains(&#39;AI&#39;) &gt; 0), &#39;total&#39;: len(group)})</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">guardian_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>  
