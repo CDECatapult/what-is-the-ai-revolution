@@ -14,10 +14,16 @@ activate it
 source activate revolution
 ```
 
-Download the data into data.jsonlines (takes about 1 hour)
+Download arXiv data into data.jsonlines (takes about 1 hour)
 
 ```python
 python scrape.py > data.jsonlines
+```
+
+Download Guardian data into guardian.jsonlines (you will need to insert your API key into `creds_guardian.txt`)
+
+```python
+python guardian.py > data.jsonlines
 ```
 
 To run the notebooks
