@@ -23,7 +23,7 @@ python scrape.py > data.jsonlines
 Download Guardian data into guardian.jsonlines (you will need to insert your API key into `creds_guardian.txt`)
 
 ```bash
-python guardian.py > data.jsonlines
+python guardian.py > guardian.jsonlines
 ```
 
 To run the notebooks
