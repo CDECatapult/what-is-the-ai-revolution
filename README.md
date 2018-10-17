@@ -10,24 +10,24 @@ conda create -n revolution anaconda
 
 activate it
 
-```python
+```bash
 source activate revolution
 ```
 
 Download arXiv data into data.jsonlines (takes about 1 hour)
 
-```python
+```bash
 python scrape.py > data.jsonlines
 ```
 
 Download Guardian data into guardian.jsonlines (you will need to insert your API key into `creds_guardian.txt`)
 
-```python
+```bash
 python guardian.py > data.jsonlines
 ```
 
 To run the notebooks
 
-```python
+```bash
 jupyter notebook
 ```
