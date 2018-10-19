@@ -2,7 +2,7 @@ Analysis of the AI publishing landscape. See [this notebook](https://github.com/
 
 To run the notebook and script:
 
-Create a new anaconda environment:
+Create a new anaconda environment via conda:
 
 ```python
 conda create -n env anaconda
@@ -14,6 +14,14 @@ activate it
 source activate env
 ```
 
+To run the notebook
+
+```bash
+jupyter notebook
+```
+
+Extras:
+
 Download arXiv data into data.jsonlines (takes about 1 hour)
 
 ```bash
@@ -24,10 +32,4 @@ Download Guardian data into guardian.jsonlines (you will need to insert your API
 
 ```bash
 python guardian.py > guardian.jsonlines
-```
-
-To run the notebooks
-
-```bash
-jupyter notebook
 ```
